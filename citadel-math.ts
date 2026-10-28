@@ -75,7 +75,9 @@ export const BANDS: readonly BandSpec[] = [
     radius: 1.86,
     width: 0.03,
     depth: 0.3,
-    orbit: { axisA: [0, 1, 0], speedA: 0.06, tilt: tiltOf(1.12, 0, 0), axisB: [0, 0, 1], speedB: 0.26 },
+    //tilted past the horizon so the axis, the prints' up, keeps pointing skyward through the y precession.
+    //same plane as a 1.12 tilt, flipped over, so the roll is reversed to keep the strip running the same way.
+    orbit: { axisA: [0, 1, 0], speedA: 0.06, tilt: tiltOf(1.12 - Math.PI, 0, 0), axisB: [0, 0, 1], speedB: -0.26 },
     film: { frames: 15, aspect: 0.85 },
   },
 ] as const;
