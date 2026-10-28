@@ -99,7 +99,8 @@
 .closing { text-align: center; background: var(--nav-bg); border-block: 1px solid var(--line); margin-top: 25px; padding: 65px 24px 70px; }
 .closing h2 { font-size: 55px; margin-bottom: 28px; }
 .footer { max-width: 1280px; margin: auto; padding: 34px 48px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.footer > span, .footer > a:last-child { font-size: 10px; color: var(--ink-soft); }
+.footer > span, .footer nav a { font-size: 10px; color: var(--ink-soft); }
+.footer nav { display: flex; gap: 18px; }
 .footer .brand { font-size: 22px; }
 @media (max-width: 1100px) {
   .demoFrame { grid-template-columns: 14.5rem minmax(0, 1fr); }

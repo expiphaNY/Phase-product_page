@@ -75,7 +75,7 @@ export function ProductStage() {
   );
 }
 
-function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: FeatureId) => void; onAskAgent: () => void }) {
+export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: FeatureId) => void; onAskAgent: () => void }) {
   const scroller = useRef<HTMLDivElement>(null);
   const [focus, setFocus] = useState(() => startOfLocalDay(new Date(2026, 9, 8)));
   const [view, setView] = useState<CalendarView>("week");

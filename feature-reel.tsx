@@ -101,7 +101,7 @@ function StripPreview({
   );
 }
 
-function FeatureBody({ id }: { id: FeatureId }) {
+export function FeatureBody({ id }: { id: FeatureId }) {
   if (id === "tags") return <TagsCard />;
   if (id === "events") return <EventsCard />;
   if (id === "rules") return <RulesCard />;

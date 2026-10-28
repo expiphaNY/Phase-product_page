@@ -9,13 +9,13 @@ import { CarouselReel } from "./carousel-reel";
 import { AGENT_SCENARIOS, type AgentScenarioId } from "./product-demo-conversations";
 import styles from "./product.module.css";
 
-const ITEMS = AGENT_SCENARIOS.map((scenario) => ({
+export const AGENT_ITEMS = AGENT_SCENARIOS.map((scenario) => ({
   id: scenario.id as AgentScenarioId,
   title: scenario.title,
   kicker: scenario.kicker,
 }));
 
-function scenarioOf(id: AgentScenarioId) {
+export function scenarioOf(id: AgentScenarioId) {
   return AGENT_SCENARIOS.find((scenario) => scenario.id === id) ?? AGENT_SCENARIOS[0];
 }
 
@@ -188,7 +188,19 @@ function Bubble({
   );
 }
 
-function DemoThread({ messages, playing }: { messages: ChatMessage[]; playing: boolean }) {
+//visible overrides the viewport check, for cards the scene moves with transforms only.
+//rest "prompt" shows just the question while idle: exactly how a turn looks the moment it starts playing.
+export function DemoThread({
+  messages,
+  playing,
+  visible,
+  rest = "full",
+}: {
+  messages: ChatMessage[];
+  playing: boolean;
+  visible?: boolean;
+  rest?: "full" | "prompt";
+}) {
   const user = messages.find((message) => message.role === "user");
   const assistant = messages.find((message) => message.role === "assistant");
   const [view, setView] = useState<ThreadView>({ kind: "rest" });
@@ -198,13 +210,14 @@ function DemoThread({ messages, playing }: { messages: ChatMessage[]; playing: b
   const stick = useRef(true);
   const lastTop = useRef(0);
   const locking = useRef(false);
-  const armed = playing && inView;
+  const seen = visible ?? inView;
+  const armed = playing && seen;
 
   if (!playing && view.kind !== "rest") {
     setView({ kind: "rest" });
   } else if (armed && view.kind !== "live") {
     setView({ kind: "live", assistant: false, activity: [], content: "", streaming: false });
-  } else if (playing && !inView && view.kind !== "hold") {
+  } else if (playing && !seen && view.kind !== "hold") {
     setView({ kind: "hold" });
   }
 
@@ -306,7 +319,7 @@ function DemoThread({ messages, playing }: { messages: ChatMessage[]; playing: b
   }, [playing, view]);
 
   const live = view.kind === "live";
-  const showAssistant = live ? view.assistant : view.kind === "rest" && Boolean(assistant);
+  const showAssistant = live ? view.assistant : view.kind === "rest" && rest === "full" && Boolean(assistant);
   const activity = live ? view.activity : assistant?.activity;
   const answer = live ? view.content : assistant?.content ?? "";
   const streaming = live && view.streaming;
@@ -359,7 +372,7 @@ export function AgentReel({ onAskAgent }: { onAskAgent: () => void }) {
         <p>Real turns from student weeks: thinking, tool calls, and answers — queued for your approval in the app.</p>
       </div>
       <CarouselReel
-        items={ITEMS}
+        items={AGENT_ITEMS}
         active={active}
         onActive={setActive}
         ariaLabel="Assistant examples"
