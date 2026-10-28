@@ -116,7 +116,7 @@ async function runScript(
   for (const part of message.activity ?? []) {
     if (player.dead) return;
     if (part.kind === "thought") {
-      const thought = { ...part.thought, text: "", seconds: undefined };
+      const thought = { ...part.thought, text: "", seconds: undefined as number | undefined };
       draft.push({ kind: "thought", thought });
       publish({ activity: cloneActivity(draft) });
       await player.stream(part.thought.text, THOUGHT_CHARS_PER_S, (text) => {
