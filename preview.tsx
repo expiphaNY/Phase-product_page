@@ -98,7 +98,11 @@ export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: Fea
     leadHour,
   });
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    //seven columns don't fit a phone, so open there on the focused day
+    if (window.matchMedia("(max-width: 600px)").matches) setView("day");
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!selected && !tagsPop) return;
