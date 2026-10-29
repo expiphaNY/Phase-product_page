@@ -58,7 +58,7 @@ export function ExploreDialog({ onClose }: Props) {
       >
         <p className={styles.dialogKicker}>IN THE APP</p>
         <h2 id="explore-title">The assistant lives with your calendars.</h2>
-        <p>This page is a sample. It will not open a chat on its own. Open WatAgent when you want to talk through your own week.</p>
+        <p>This page is a sample. It will not open a chat on its own. Open Phaze when you want to talk through your own week.</p>
         <div className={styles.dialogActions}>
           <button ref={stayRef} type="button" className={styles.dialogStay} onClick={onClose}>Keep looking</button>
           <Link className={styles.dialogGo} href="/">Open the app <span aria-hidden="true">↗</span></Link>

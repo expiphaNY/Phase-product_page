@@ -167,7 +167,7 @@ function Bubble({
   return (
     <div className={`bubble-row is-${message.role} is-latest`}>
       <article className={`bubble bubble-${message.role}`} data-empty={assistant && !content.trim() ? "true" : undefined}>
-        <span className="bubble-role">{assistant ? "WatAgent" : "You"}</span>
+        <span className="bubble-role">{assistant ? "Horizon 1.1" : "You"}</span>
         <div className="bubble-body">
           {assistant ? (
             <AgentActivity

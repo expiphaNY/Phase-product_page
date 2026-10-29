@@ -160,7 +160,7 @@ export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: Fea
     <div className={styles.productDemo} data-tags={tagsPop ? "true" : undefined}>
       <div className={styles.demoFrame}>
         <aside className={styles.demoSidebar} data-demo-popup={tagsPop ? "true" : undefined}>
-          <div className={styles.demoWordmark}>WatAgent</div>
+          <div className={styles.demoWordmark}>Phaze</div>
           <nav aria-label="Sample sections">
             {SECTIONS.map((section) => (
               <button
@@ -178,7 +178,7 @@ export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: Fea
             ))}
           </nav>
           <div className={styles.sourceList}>
-            <h3>WATAGENT CALENDARS</h3>
+            <h3>PHAZE CALENDARS</h3>
             <p><i /> Agent Main</p>
             <h3>EXTERNAL CALENDARS</h3>
             <p><i /> Course schedule</p>

@@ -332,7 +332,7 @@ export function CitadelExperience() {
         {ANCHORS.map((anchor) => (
           <span key={anchor.id} id={anchor.id} className={styles.anchor} style={{ "--at": holdFraction(anchor.span) } as CSSProperties} />
         ))}
-        <section ref={stageRef} className={styles.stage} aria-label="WatAgent">
+        <section ref={stageRef} className={styles.stage} aria-label="Phaze">
           <div className={styles.lensLayer} data-off={!animated || phase === "done" || undefined}>
             <LensView dom={dom} live={phase === "calendar"} onFeature={showFeature} onAskAgent={() => setAsk(true)} />
           </div>
@@ -359,7 +359,7 @@ export function CitadelExperience() {
             <h1>Your days,<br /><em>thoughtfully</em> planned.</h1>
             <p>Bring your calendars together. Talk through your plans. Find a little more space for what matters.</p>
             <div className={styles.actions}>
-              <Link className={productStyles.primary} href="/">Start your day with WatAgent <span aria-hidden="true">↗</span></Link>
+              <Link className={productStyles.primary} href="/">Start your day with Phaze <span aria-hidden="true">↗</span></Link>
               <ProductScrollLink className={productStyles.secondary} href="#preview">Explore the calendar <span aria-hidden="true">↓</span></ProductScrollLink>
             </div>
             <div className={styles.scrollCue} aria-hidden="true">SCROLL TO UNFOLD</div>
@@ -409,12 +409,12 @@ function ReducedPage({ onAskAgent }: { onAskAgent: () => void }) {
         <h1>Your days,<br /><em>thoughtfully</em> planned.</h1>
         <p>Bring your calendars together. Talk through your plans. Find a little more space for what matters.</p>
         <div className={styles.actions}>
-          <Link className={productStyles.primary} href="/">Start your day with WatAgent <span aria-hidden="true">↗</span></Link>
+          <Link className={productStyles.primary} href="/">Start your day with Phaze <span aria-hidden="true">↗</span></Link>
           <ProductScrollLink className={productStyles.secondary} href="#preview">Explore the calendar <span aria-hidden="true">↓</span></ProductScrollLink>
         </div>
       </div>
       <section id="preview" className={styles.reducedBlock} aria-label="Interactive product preview">
-        <div className={productStyles.previewCaption}><span>YOUR CALENDAR, WITH AN ASSISTANT</span><span>↓ Explore WatAgent</span></div>
+        <div className={productStyles.previewCaption}><span>YOUR CALENDAR, WITH AN ASSISTANT</span><span>↓ Explore Phaze</span></div>
         <CalendarPreview onFeature={setFeature} onAskAgent={onAskAgent} />
       </section>
       <section id="showcase" className={styles.reducedBlock}>

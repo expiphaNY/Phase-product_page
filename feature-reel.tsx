@@ -217,8 +217,8 @@ function CalendarsCard() {
   const [open, setOpen] = useState("course");
   const sources = [
     { id: "course", name: "Course schedule", meta: "Imported", color: "#3d6b8c", blurb: "Lectures stay in their own lane." },
-    { id: "personal", name: "Personal", meta: "WatAgent", color: "#5b8a72", blurb: "Lunch, the market, the Sunday call." },
-    { id: "google", name: "Google Calendar", meta: "Connected", color: "#b0600f", blurb: "WatAgent reads it. It does not become it." },
+    { id: "personal", name: "Personal", meta: "Phaze", color: "#5b8a72", blurb: "Lunch, the market, the Sunday call." },
+    { id: "google", name: "Google Calendar", meta: "Connected", color: "#b0600f", blurb: "Phaze reads it. It does not become it." },
   ];
 
   return (
