@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import { useForcedReducedMotion } from "@/shared/a11y-prefs";
 import { createVelocityTracker } from "@/shared/motion";
 import { AgentReel } from "./agent-reel";
 import { dialGrab, dialRelease, dialStep, dialTo, follow } from "./citadel-dial";
@@ -38,7 +39,13 @@ const ANCHORS: { id: string; span: Span }[] = [
   { id: "assistant", span: BEATS.agentsHold },
 ];
 
+//the in-app reduce motion choice remounts the scene, so it always starts from the same initial state as a fresh load
 export function CitadelExperience() {
+  const forceReduce = useForcedReducedMotion();
+  return <CitadelPage key={forceReduce ? "plain" : "scene"} forceReduce={forceReduce} />;
+}
+
+function CitadelPage({ forceReduce }: { forceReduce: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLElement>(null);
@@ -98,7 +105,8 @@ export function CitadelExperience() {
     () => {
       const mm = gsap.matchMedia();
       mm.add(
-        { full: "(prefers-reduced-motion: no-preference)", reduced: "(prefers-reduced-motion: reduce)" },
+        //the in-app choice forces the flat page; "all" and "not all" are the always-true and always-false queries
+        forceReduce ? { full: "not all", reduced: "all" } : { full: "(prefers-reduced-motion: no-preference)", reduced: "(prefers-reduced-motion: reduce)" },
         (context) => {
           if (context.conditions?.reduced) {
             //no canvas, no pin, no lenis: the plain page in document flow

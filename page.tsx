@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CitadelExperience } from "./citadel-experience";
+import { MotionToggle } from "./motion-toggle";
 import { ProductLabProvider } from "./product-lab-context";
 import { ProductScrollLink } from "./product-scroll-link";
 import styles from "./product.module.css";
@@ -16,7 +17,7 @@ export default function ProductPage() {
       <ProductScrollLink className={styles.skip} href="#main">Skip to content</ProductScrollLink>
       <header className={styles.nav}>
         <Link className={styles.brand} href="/product" aria-label="Phaze home">Phaze</Link>
-        <nav aria-label="Main navigation"><ProductScrollLink href="#features">Why Phaze</ProductScrollLink><ProductScrollLink href="#preview">Take a look</ProductScrollLink><Link className={styles.navCta} href="/">Open app <span aria-hidden="true">↗</span></Link></nav>
+        <nav aria-label="Main navigation"><ProductScrollLink href="#features">Why Phaze</ProductScrollLink><ProductScrollLink href="#preview">Take a look</ProductScrollLink><MotionToggle /><Link className={styles.navCta} href="/">Open app <span aria-hidden="true">↗</span></Link></nav>
       </header>
       <main id="main">
         <ProductLabProvider>
@@ -33,7 +34,7 @@ export default function ProductPage() {
         <section className={styles.faq} aria-labelledby="faq-title"><h2 id="faq-title">A few things to know.</h2><div><details><summary>Can I bring my existing calendars?<span>+</span></summary><p>Phaze supports Google Calendar connections and calendar imports. Open the app to connect and organize your calendar sources.</p></details><details><summary>What does the AI assistant do?<span>+</span></summary><p>The assistant helps you work through plans using calendar context. You can attach calendars to a conversation and ask about your schedule.</p></details><details><summary>Is Phaze just for campus events?<span>+</span></summary><p>No. You can manage personal calendars, events, and tasks. Waterloo campus events are another way to bring your week together.</p></details></div></section>
         <section className={styles.closing}><span className={styles.label}>MAKE A LITTLE SPACE</span><h2>Your next week<br />could feel <em>different.</em></h2><Link className={styles.primary} href="/">Open Phaze <span aria-hidden="true">↗</span></Link></section>
       </main>
-      <footer className={styles.footer}><Link className={styles.brand} href="/product">Phaze</Link><span>A little clarity for your everyday.</span><nav aria-label="Legal"><Link href="/terms">Terms</Link><Link href="/privacy">Privacy</Link></nav></footer>
+      <footer className={styles.footer}><Link className={styles.brand} href="/product">Phaze</Link><span>A little clarity for your everyday.</span><nav aria-label="Legal"><Link href="/terms">Terms</Link><Link href="/privacy">Privacy</Link><Link href="/accessibility">Accessibility</Link></nav></footer>
     </div>
   );
 }

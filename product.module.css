@@ -8,7 +8,7 @@
 #main { scroll-margin-top: 28px; }
 .page a { color: inherit; text-decoration: none; }
 .page a:focus-visible, .page button:focus-visible, .page summary:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 4px;
 }
 .skip { position: absolute; top: -70px; left: 20px; z-index: 10; padding: 12px; background: var(--panel-solid); }
@@ -16,6 +16,12 @@
 .nav { max-width: 1376px; margin: auto; padding: 25px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { font-family: var(--font-display); font-size: 27px; font-weight: 600; letter-spacing: -1px; }
 .nav nav { display: flex; gap: 32px; align-items: center; font-size: 13px; }
+.motionToggle { min-height: 24px; padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: transparent; color: inherit; font: inherit; font-size: 13px; cursor: pointer; transition: transform 100ms ease-out; }
+.motionToggle:active { transform: scale(0.98); }
+.motionToggle[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.footer nav a { display: inline-flex; align-items: center; min-height: 24px; }
+.nav nav > a:not(.navCta) { display: inline-flex; align-items: center; min-height: 24px; }
+.secondary { display: inline-flex; align-items: center; min-height: 24px; }
 .navCta { border: 1px solid var(--line); background: var(--panel-solid); padding: 10px 17px; border-radius: var(--radius); }
 .navCta span { margin-left: 16px; }
 .hero { text-align: center; padding: 70px 24px 58px; }
@@ -23,12 +29,12 @@
 .eyebrow { display: flex; justify-content: center; align-items: center; gap: 9px; }
 .eyebrow > span { height: 6px; width: 6px; border-radius: 50%; background: var(--accent); }
 .hero h1 { font-family: var(--font-display); font-size: clamp(48px, 6.2vw, 84px); font-weight: 450; line-height: 1.08; letter-spacing: -3.5px; margin: 24px 0; }
-.page em { font-weight: 400; color: var(--accent); }
+.page em { font-weight: 400; color: var(--accent-text); }
 .hero > p { font-size: 16px; line-height: 1.8; color: var(--ink-soft); margin: 0; }
 .actions { display: flex; justify-content: center; align-items: center; gap: 28px; margin-top: 30px; }
 .primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 30px;
-  background: color-mix(in srgb, var(--accent), var(--accent-deep) 25%); color: var(--on-accent) !important; padding: 15px 22px; border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent-fill), var(--accent-deep) 25%); color: var(--on-accent) !important; padding: 15px 22px; border-radius: var(--radius);
   font-size: 13px; transition: background 0.2s, transform 100ms ease-out;
 }
 .primary:hover { background: var(--accent-deep); }
@@ -61,7 +67,7 @@
 .sourceList .sourceHint { color: var(--ink-soft); font-size: 11px; line-height: 1.8; }
 .demoMain { min-width: 0; position: relative; }
 .demoToolbar { min-height: 76px; }
-.agentLink { color: var(--accent) !important; font-size: 12px; white-space: nowrap; }
+.agentLink { color: var(--accent-text) !important; font-size: 12px; white-space: nowrap; }
 /* No top padding: the sticky day header must sit flush with the top or events show above it. */
 .demoCalendar { height: 560px; overflow: auto; padding: 0 10px 10px; }
 .demoCalendar :global(.calendar-month-grid) { grid-auto-rows: minmax(90px, 1fr); }
@@ -79,14 +85,15 @@
 .featureGrid article > p { font-size: 13px; line-height: 1.8; color: var(--ink-soft); margin: 0; }
 .miniCalendars, .miniChat, .miniEvent { height: 175px; margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--nav-bg); padding: 24px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 7px; }
 .miniCalendars span { background: var(--panel-solid); border: 1px solid var(--line); padding: 8px; border-radius: 5px; font-size: 11px; }
-.miniCalendars b { width: 100%; text-align: center; font-size: 23px; color: var(--accent); line-height: 1; }
+.miniCalendars b { width: 100%; text-align: center; font-size: 23px; color: var(--accent-text); line-height: 1; }
 .miniCalendars strong { font-size: 12px; font-weight: 500; background: var(--panel-solid); border: 1px solid var(--accent); padding: 10px 25px; border-radius: var(--radius); }
-.miniChat { background: var(--panel-solid); flex-direction: column; align-items: flex-start; gap: 15px; }
+.miniChat { background: var(--panel-solid); flex-direction: column; flex-wrap: nowrap; align-items: flex-start; gap: 15px; height: auto; min-height: 175px; }
 .miniChat span { align-self: flex-end; border: 1px solid var(--line); background: var(--nav-bg); padding: 11px; border-radius: var(--radius); font-size: 12px; }
 .miniChat strong { font-size: 13px; font-weight: 500; }
 .miniChat i { font-style: normal; font-size: 11px; line-height: 1.5; color: var(--ink-soft); }
-.miniEvent { background: var(--panel-solid); flex-direction: column; align-items: flex-start; gap: 10px; }
-.miniEvent > span { font-size: 11px; letter-spacing: 1.5px; color: var(--accent); }
+/*column cards grow with their text; wrapping here would push the last line into a second column outside the card*/
+.miniEvent { background: var(--panel-solid); flex-direction: column; flex-wrap: nowrap; align-items: flex-start; gap: 10px; height: auto; min-height: 175px; }
+.miniEvent > span { font-size: 11px; letter-spacing: 1.5px; color: var(--accent-text); }
 .miniEvent strong { font: 400 25px/1.1 var(--font-display); }
 .miniEvent > div { font-size: 11px; color: var(--ink-soft); }
 .faq { max-width: 1184px; margin: 100px auto 0; border-top: 1px solid var(--line); padding: 50px 0; display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; }
@@ -94,7 +101,7 @@
 .faq details { border-bottom: 1px solid var(--line); padding: 20px 0; }
 .faq summary { font-size: 13px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 15px; }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary span { color: var(--accent); }
+.faq summary span { color: var(--accent-text); }
 .faq details[open] summary span { transform: rotate(45deg); }
 .faq details p { font-size: 12px; line-height: 1.8; color: var(--ink-soft); max-width: 480px; margin: 14px 0 0; }
 .closing { text-align: center; background: var(--nav-bg); border-block: 1px solid var(--line); margin-top: 25px; padding: 65px 24px 70px; }
@@ -182,7 +189,7 @@
 .expand > button:active, .menuToggle:active, .chatAgent:active, .ask:active, .dialogStay:active, .dialogGo:active, .detail header button:active, .reelStep:active, .reelDot:active {
   transform: scale(0.98);
 }
-.expand i, .menuToggle i { font-style: normal; color: var(--accent); }
+.expand i, .menuToggle i { font-style: normal; color: var(--accent-text); }
 .previewNotice {
   margin: 0;
   padding: 8px 16px;
@@ -207,7 +214,7 @@
 }
 .detail header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .detail header span { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
-.detail header button { border: 0; background: transparent; color: var(--accent); font-size: 12px; padding: 4px; }
+.detail header button { border: 0; background: transparent; color: var(--accent-text); font-size: 12px; padding: 4px; }
 .detail h3 { margin: 8px 0 4px; font: 500 22px/1.15 var(--font-display); letter-spacing: -0.03em; }
 .detail p { margin: 0; font-size: 13px; line-height: 1.5; }
 .detailPlace { margin-top: 2px !important; color: var(--ink-soft); }
@@ -362,7 +369,7 @@
   margin-top: 8px;
   padding: 10px 14px;
   border-radius: var(--radius);
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--on-accent);
   font-size: 13px;
   text-decoration: none;
@@ -433,7 +440,7 @@
 }
 .inlineDetail strong { font-weight: 560; }
 .inlineDetail span { color: var(--ink-soft); line-height: 1.45; }
-.inlineDetail button { justify-self: start; margin-top: 4px; border: 0; background: transparent; color: var(--accent); font-size: 12px; padding: 0; }
+.inlineDetail button { justify-self: start; margin-top: 4px; border: 0; background: transparent; color: var(--accent-text); font-size: 12px; padding: 0; }
 .sourceSwatch { display: flex; align-items: center; gap: 9px; margin-top: 8px; font-size: 12px; }
 .sourceSwatch i { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
 .srOnly {
