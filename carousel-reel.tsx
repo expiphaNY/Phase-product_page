@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
-import { createVelocityTracker, project } from "@/shared/motion";
+import { createVelocityTracker, prefersReducedMotion, project, subscribeReducedMotion } from "@/shared/motion";
 import styles from "./product.module.css";
 
 export type CarouselItem<T extends string> = {
@@ -159,14 +159,12 @@ export function CarouselReel<T extends string>({ items, active, onActive, render
   }
 
   useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => {
-      reduced.current = query.matches;
-      setMotionOff(query.matches);
+    const apply = (off: boolean) => {
+      reduced.current = off;
+      setMotionOff(off);
     };
-    apply();
-    query.addEventListener("change", apply);
-    return () => query.removeEventListener("change", apply);
+    apply(prefersReducedMotion());
+    return subscribeReducedMotion(apply);
   }, []);
 
   useEffect(() => {

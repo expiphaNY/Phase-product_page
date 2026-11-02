@@ -130,6 +130,12 @@ async function runScript(
       await player.wait(TOOL_GAP_MS);
       continue;
     }
+    if (part.kind === "skill") {
+      draft.push({ kind: "skill", skill: { ...part.skill } });
+      publish({ activity: cloneActivity(draft) });
+      await player.wait(TOOL_GAP_MS);
+      continue;
+    }
     const events: ToolEventRecord[] = [];
     draft.push({ kind: "tools", events });
     for (const source of part.events) {

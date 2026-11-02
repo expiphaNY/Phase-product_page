@@ -89,7 +89,7 @@
 }
 .sphereSlide span { font-size: calc(var(--lens-r, 0px) * 0.06); letter-spacing: 0.14em; color: var(--ink-soft); }
 .sphereSlide strong { font: 500 calc(var(--lens-r, 0px) * 0.15) / 1 var(--font-display); letter-spacing: -0.03em; }
-.sphereSlide em { font-size: calc(var(--lens-r, 0px) * 0.075); font-style: normal; color: var(--accent); }
+.sphereSlide em { font-size: calc(var(--lens-r, 0px) * 0.075); font-style: normal; color: var(--accent-text); }
 @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 /* one card's face: the live reel card and the photographs on the band share it exactly */
