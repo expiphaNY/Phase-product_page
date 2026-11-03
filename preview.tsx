@@ -19,33 +19,28 @@ import { FeatureReel, type FeatureId } from "./feature-reel";
 import { paintWithTags, sampleTagTargets } from "./product-lab";
 import { useProductLab } from "./product-lab-context";
 import { smoothScrollToElement } from "@/shared/motion";
+import { formatLocalDateTime } from "@/shared/date-format";
+import { useT } from "@/i18n/locale-provider";
+import { t as translate } from "@/i18n/translate";
 import { sampleItems } from "./sample-calendar";
 import styles from "./product.module.css";
 
 const WEEK_STARTS = 1 as const;
 
-const VIEW_OPTIONS: SegmentOption<CalendarView>[] = [
-  { value: "day", label: "Day", hint: "Day" },
-  { value: "workweek", label: "5 Day", hint: "Monday to Friday" },
-  { value: "week", label: "Week", hint: "Week" },
-  { value: "month", label: "Month", hint: "Month" },
-  { value: "year", label: "Year", hint: "Year" },
-];
-
-const SECTIONS: Array<{ id: FeatureId | "calendar"; label: string }> = [
-  { id: "calendar", label: "Calendar" },
-  { id: "tasks", label: "Tasks" },
-  { id: "events", label: "Events" },
-  { id: "calendars", label: "Configuration" },
+const SECTIONS: Array<{ id: FeatureId | "calendar"; label: "preview.calendar" | "preview.tasks" | "preview.events" | "preview.configuration" }> = [
+  { id: "calendar", label: "preview.calendar" },
+  { id: "tasks", label: "preview.tasks" },
+  { id: "events", label: "preview.events" },
+  { id: "calendars", label: "preview.configuration" },
 ];
 
 function whenLabel(item: TimelineItem): string {
   const start = new Date(item.startUTC);
-  const day = start.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
-  if (item.allDay) return `${day} · All day`;
+  const day = formatLocalDateTime(start, { weekday: "long", month: "long", day: "numeric" });
+  if (item.allDay) return translate("preview.allDay", { day });
   const clock: Intl.DateTimeFormatOptions = { hour: "numeric", minute: "2-digit" };
-  const end = new Date(item.endUTC).toLocaleTimeString(undefined, clock);
-  return `${day} · ${start.toLocaleTimeString(undefined, clock)} – ${end}`;
+  const end = formatLocalDateTime(new Date(item.endUTC), clock);
+  return `${day} · ${formatLocalDateTime(start, clock)} – ${end}`;
 }
 
 export function ProductStage() {
@@ -76,6 +71,14 @@ export function ProductStage() {
 }
 
 export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: FeatureId) => void; onAskAgent: () => void }) {
+  const t = useT();
+  const viewOptions = useMemo<SegmentOption<CalendarView>[]>(() => [
+    { value: "day", label: t("view.day"), hint: t("view.day") },
+    { value: "workweek", label: t("view.workweek"), hint: t("preview.workweekHint") },
+    { value: "week", label: t("view.week"), hint: t("view.week") },
+    { value: "month", label: t("view.month"), hint: t("view.month") },
+    { value: "year", label: t("view.year"), hint: t("view.year") },
+  ], [t]);
   const scroller = useRef<HTMLDivElement>(null);
   const [focus, setFocus] = useState(() => startOfLocalDay(new Date(2026, 9, 8)));
   const [view, setView] = useState<CalendarView>("week");
@@ -173,7 +176,7 @@ export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: Fea
                   onFeature(section.id);
                 }}
               >
-                {section.label}
+                {t(section.label)}
               </button>
             ))}
           </nav>
@@ -192,7 +195,7 @@ export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: Fea
             </div>
             <div className="calendar-toolbar-right">
               <div className="calendar-step">
-                <button type="button" className="icon-btn" aria-label="Previous" onClick={() => move(-1)}><ChevronLeftIcon /></button>
+                <button type="button" className="icon-btn" aria-label={t("toolbar.previous")} onClick={() => move(-1)}><ChevronLeftIcon /></button>
                 <button type="button" className="calendar-today-btn" onClick={() => {
                   const today = startOfLocalDay(new Date());
                   setView((current) => viewForToday(current, today));
@@ -200,14 +203,14 @@ export function CalendarPreview({ onFeature, onAskAgent }: { onFeature: (id: Fea
                   setTodayScroll((n) => n + 1);
                   setSelected(null);
                   setNotice(null);
-                }}>Today</button>
-                <button type="button" className="icon-btn" aria-label="Next" onClick={() => move(1)}><ChevronRightIcon /></button>
+                }}>{t("toolbar.today")}</button>
+                <button type="button" className="icon-btn" aria-label={t("toolbar.next")} onClick={() => move(1)}><ChevronRightIcon /></button>
               </div>
               <SegmentedControl
                 value={view}
                 onChange={(next) => { setView(next); setSelected(null); setNotice(null); }}
-                options={VIEW_OPTIONS}
-                label="Calendar view"
+                options={viewOptions}
+                label={t("toolbar.view")}
               />
               <button
                 type="button"
