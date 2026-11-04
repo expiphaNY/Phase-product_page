@@ -8,6 +8,8 @@ import { prefersReducedMotion } from "@/shared/motion";
 import { CarouselReel } from "./carousel-reel";
 import { AGENT_SCENARIOS, type AgentScenarioId } from "./product-demo-conversations";
 import styles from "./product.module.css";
+import { AgentAvatar } from "@/agent/agent-avatar";
+import { useAgentName } from "@/agent/agent-look";
 
 export const AGENT_ITEMS = AGENT_SCENARIOS.map((scenario) => ({
   id: scenario.id as AgentScenarioId,
@@ -170,10 +172,20 @@ function Bubble({
   holdToggle: boolean;
 }) {
   const assistant = message.role === "assistant";
+  const agentName = useAgentName();
   return (
     <div className={`bubble-row is-${message.role} is-latest`}>
       <article className={`bubble bubble-${message.role}`} data-empty={assistant && !content.trim() ? "true" : undefined}>
-        <span className="bubble-role">{assistant ? "Horizon 1.1" : "You"}</span>
+        <span className="bubble-role">
+          {assistant ? (
+            <>
+              <AgentAvatar size={24} blinking className="bubble-avatar" />
+              {agentName}
+            </>
+          ) : (
+            "You"
+          )}
+        </span>
         <div className="bubble-body">
           {assistant ? (
             <AgentActivity
